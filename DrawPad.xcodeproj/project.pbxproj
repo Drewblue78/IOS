@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80214C4A256D4FCA005067BC /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80214C49256D4FCA005067BC /* ColorViewController.swift */; };
 		E1941C5720B53CB4004A2217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C5620B53CB4004A2217 /* AppDelegate.swift */; };
 		E1941C5920B53CB4004A2217 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C5820B53CB4004A2217 /* ViewController.swift */; };
 		E1941C5C20B53CB4004A2217 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1941C5A20B53CB4004A2217 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80214C49256D4FCA005067BC /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
 		E1941C5320B53CB4004A2217 /* DrawPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1941C5620B53CB4004A2217 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1941C5820B53CB4004A2217 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				E1941C5620B53CB4004A2217 /* AppDelegate.swift */,
 				E1941C5820B53CB4004A2217 /* ViewController.swift */,
 				E1941C6820B544E8004A2217 /* SettingsViewController.swift */,
+				80214C49256D4FCA005067BC /* ColorViewController.swift */,
 				E1941C6A20B54914004A2217 /* Pencil.swift */,
 				E1941C5A20B53CB4004A2217 /* Main.storyboard */,
 				E1941C5D20B53CB5004A2217 /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 				E1941C5920B53CB4004A2217 /* ViewController.swift in Sources */,
 				E1941C5720B53CB4004A2217 /* AppDelegate.swift in Sources */,
 				E1941C6B20B54914004A2217 /* Pencil.swift in Sources */,
+				80214C4A256D4FCA005067BC /* ColorViewController.swift in Sources */,
 				E1941C6920B544E8004A2217 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

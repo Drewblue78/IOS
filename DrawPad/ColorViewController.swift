@@ -1,19 +1,25 @@
+//
+//  ColorViewController.swift
+//  DrawPad
+//
+//  Created by Andrew Power on 2020-11-24.
+//  Copyright © 2020 Ray Wenderlich. All rights reserved.
+//
+
+import Foundation
 
 
 import UIKit
 
-protocol SettingsViewControllerDelegate: class {
-  func settingsViewControllerFinished(_ settingsViewController: SettingsViewController)
+protocol ColorViewControllerDelegate: class {
+  func colorViewControllerFinished(_ colorViewController: ColorViewController)
   }
 
-class SettingsViewController: UIViewController {
+
+class ColorViewController: UIViewController {
   
-  @IBOutlet weak var sliderBrush: UISlider!
-  @IBOutlet weak var sliderOpacity: UISlider!
   @IBOutlet weak var previewImageView: UIImageView!
   
-  @IBOutlet weak var labelBrush: UILabel!
-  @IBOutlet weak var labelOpacity: UILabel!
   
   @IBOutlet weak var sliderRed: UISlider!
   @IBOutlet weak var sliderGreen: UISlider!
@@ -23,9 +29,9 @@ class SettingsViewController: UIViewController {
   @IBOutlet weak var labelGreen: UILabel!
   @IBOutlet weak var labelBlue: UILabel!
   
-  weak var delegate: SettingsViewControllerDelegate?
+  weak var delegate: ColorViewControllerDelegate?
   
-  var brush: CGFloat = 10.0
+  var brush: CGFloat = 50.0
   var opacity: CGFloat = 1.0
   var red: CGFloat = 0.0
   var green: CGFloat = 0.0
@@ -35,10 +41,7 @@ class SettingsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    sliderBrush.value = Float(brush)
-    labelBrush.text = String(format: "%.1f", brush)
-    sliderOpacity.value = Float(opacity)
-    labelOpacity .text = String(format: "%.1f", opacity)
+    
     sliderRed.value = Float(red * 255.0)
     labelRed.text = Int(sliderRed.value).description
     sliderGreen.value = Float(green * 255.0)
@@ -68,21 +71,10 @@ class SettingsViewController: UIViewController {
   // MARK: - Actions
   
   @IBAction func closePressed(_ sender: Any) {
-    delegate?.settingsViewControllerFinished(self)
+    delegate?.colorViewControllerFinished(self)
 //    dismiss(animated: true, completion: nil)
   }
   
-  @IBAction func brushChanged(_ sender: UISlider) {
-    brush = CGFloat(sender.value)
-    labelBrush.text = String(format: "%.1f", brush)
-    drawPreview()
-  }
-  
-  @IBAction func opacityChanged(_ sender: UISlider) {
-    opacity = CGFloat(sender.value)
-    labelOpacity.text = String(format: "%.1f", opacity)
-    drawPreview()
-  }
   
   @IBAction func colorChanged(_ sender: UISlider) {
     red = CGFloat(sliderRed.value / 255.0)
