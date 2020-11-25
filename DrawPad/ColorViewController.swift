@@ -72,7 +72,7 @@ class ColorViewController: UIViewController {
   
   @IBAction func closePressed(_ sender: Any) {
     delegate?.colorViewControllerFinished(self)
-//    dismiss(animated: true, completion: nil)
+    
   }
   
   

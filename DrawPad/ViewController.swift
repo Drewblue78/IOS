@@ -74,16 +74,18 @@ class ViewController: UIViewController {
   }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    guard
-      let navController = segue.destination as? UINavigationController,
-      let settingsController = navController.topViewController as?
-    SettingsViewController
+    guard let navController = segue.destination as? UINavigationController
     else {
       return
     }
-    settingsController.delegate = self
-    settingsController.brush = brushWidth
-    settingsController.opacity = opacity
+    if let settingsController = navController.topViewController as? SettingsViewController{
+      settingsController.delegate = self
+      settingsController.brush = brushWidth
+      settingsController.opacity = opacity
+    }
+    if let colorController = navController.topViewController as? ColorViewController{
+      colorController.delegate = self
+    }
   }
   
   @IBAction func resetPressed(_ sender: Any) {
@@ -117,6 +119,15 @@ extension ViewController: SettingsViewControllerDelegate {
     color = UIColor(red: settingsViewController.red, green: settingsViewController.green, blue: settingsViewController.blue, alpha: 1.0)
     dismiss(animated: true)
   }
+}
+
+extension ViewController: ColorViewControllerDelegate {
+  func colorViewControllerFinished(_ colorViewController: ColorViewController) {
+    color = UIColor(red: colorViewController.red, green: colorViewController.green, blue: colorViewController.blue, alpha: 1.0)
+    dismiss(animated: true)
+  }
+  
+  
 }
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
