@@ -39,12 +39,7 @@ class SettingsViewController: UIViewController {
     labelBrush.text = String(format: "%.1f", brush)
     sliderOpacity.value = Float(opacity)
     labelOpacity .text = String(format: "%.1f", opacity)
-    sliderRed.value = Float(red * 255.0)
-    labelRed.text = Int(sliderRed.value).description
-    sliderGreen.value = Float(green * 255.0)
-    labelGreen.text = Int(sliderGreen.value).description
-    sliderBlue.value = Float(blue * 255.0)
-    labelBlue.text = Int(sliderBlue.value).description
+    
     
     drawPreview()
     

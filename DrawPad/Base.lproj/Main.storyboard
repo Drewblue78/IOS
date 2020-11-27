@@ -20,26 +20,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-i0-hyu" userLabel="TempImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-i0-hyu" userLabel="TempImageView">
+                                <rect key="frame" x="0.0" y="140" width="428" height="786"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L06-IZ-4jf" userLabel="MainImageView">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                             </imageView>
-                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuW-Qb-y5J">
-                                <rect key="frame" x="0.0" y="752" width="40" height="150"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="4kw-Ep-0j3"/>
-                                    <constraint firstAttribute="width" constant="40" id="82d-hB-Ggi"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="GSi-Kh-NFd"/>
-                                </constraints>
-                                <state key="normal" image="Eraser">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pencilPressed:" destination="bnj-k7-SPu" eventType="touchUpInside" id="0Nk-mh-mRf"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z9f-T5-1gL">
                                 <rect key="frame" x="31" y="62" width="51" height="30"/>
                                 <state key="normal" title="COLOR"/>
@@ -87,6 +73,20 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dsd-0O-uBZ">
                                 <rect key="frame" x="354" y="102" width="37" height="30"/>
                                 <state key="normal" title="SAVE"/>
+                            </button>
+                            <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuW-Qb-y5J">
+                                <rect key="frame" x="-1" y="775" width="40" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="4kw-Ep-0j3"/>
+                                    <constraint firstAttribute="width" constant="40" id="82d-hB-Ggi"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="GSi-Kh-NFd"/>
+                                </constraints>
+                                <state key="normal" image="Eraser">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pencilPressed:" destination="bnj-k7-SPu" eventType="touchUpInside" id="0Nk-mh-mRf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jRo-lx-Yhq"/>
