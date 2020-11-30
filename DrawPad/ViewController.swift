@@ -5,14 +5,26 @@ class ViewController: UIViewController {
   
   @IBOutlet weak var mainImageView: UIImageView!
   @IBOutlet weak var tempImageView: UIImageView!
+  @IBOutlet weak var show: UISwitch!
   
+  @IBOutlet weak var menu: UIStackView!
   var lastPoint = CGPoint.zero
   var color = UIColor.black
   var brushWidth: CGFloat = 10.0
   var opacity:CGFloat = 1.0
   var swiped = false
   
+  
   // MARK: - Actions
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  @IBAction func switchChanged(_ sender: UISwitch) {
+    menu.isHidden = !show.isOn
+  }
+  
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
     guard let touch = touches.first else {
@@ -25,7 +37,7 @@ class ViewController: UIViewController {
   @IBAction func imageChoose(_ sender: Any) {
     imagePicker.delegate = self
     imagePicker.sourceType = .savedPhotosAlbum
-    imagePicker.allowsEditing = true
+    imagePicker.allowsEditing = false
     present(imagePicker, animated: true, completion: nil)
   }
   func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
@@ -142,14 +154,17 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     guard let context = UIGraphicsGetCurrentContext() else {
       return
     }
-    guard let image = info[.editedImage] as? UIImage else { return }
-    mainImageView.image = image
-    tempImageView.image?.draw(in: view.bounds)
-    context.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: 100, height: 100))
-    tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-    tempImageView.alpha = opacity
-    UIGraphicsEndImageContext()
+    guard let image = info[.originalImage] as? UIImage else { return }
+    //        mainImageView.image = image
+    if let img = image.cgImage{
+      tempImageView.image?.draw(in: view.bounds)
+      context.draw(img, in: CGRect(x: 0, y: 0, width: img.width, height: img.height))
+      tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+      tempImageView.alpha = opacity
+      UIGraphicsEndImageContext()
+    }
   }
+  
 }
 
 
