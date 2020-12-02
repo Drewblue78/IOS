@@ -1,30 +1,44 @@
 
 import UIKit
-
+import MobileCoreServices
+enum ImagePickerAction {
+  case open, texture
+}
 class ViewController: UIViewController {
   
   @IBOutlet weak var mainImageView: UIImageView!
   @IBOutlet weak var tempImageView: UIImageView!
   @IBOutlet weak var show: UISwitch!
   
+  @IBOutlet weak var eraseButton: UIButton!
   @IBOutlet weak var menu: UIStackView!
+  
   var lastPoint = CGPoint.zero
   var color = UIColor.black
   var brushWidth: CGFloat = 10.0
   var opacity:CGFloat = 1.0
   var swiped = false
   
-  
-  // MARK: - Actions
+  var imagePickerAction = ImagePickerAction.open
+  var texture: UIImage?
   
   override func viewDidLoad() {
     super.viewDidLoad()
   }
   
-  @IBAction func switchChanged(_ sender: UISwitch) {
-    menu.isHidden = !show.isOn
+  @IBAction func toggleTexture(_ sender: Any) {
+    imagePickerAction = ImagePickerAction.texture
+    imagePicker.delegate = self
+    imagePicker.sourceType = .savedPhotosAlbum
+    imagePicker.allowsEditing = false
+    present(imagePicker, animated: true, completion: nil)
+    
   }
   
+  @IBAction func switchChanged(_ sender: UISwitch) {
+    menu.isHidden = !show.isOn
+    eraseButton.isHidden = !show.isOn
+  }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
     guard let touch = touches.first else {
@@ -35,6 +49,7 @@ class ViewController: UIViewController {
   }
   var imagePicker = UIImagePickerController()
   @IBAction func imageChoose(_ sender: Any) {
+    imagePickerAction = ImagePickerAction.open
     imagePicker.delegate = self
     imagePicker.sourceType = .savedPhotosAlbum
     imagePicker.allowsEditing = false
@@ -61,20 +76,46 @@ class ViewController: UIViewController {
     UIGraphicsEndImageContext()
   }
   
+  func drawTexture(from fromPoint: CGPoint, to toPoint: CGPoint, brush: UIImage) {
+    UIGraphicsBeginImageContext(view.frame.size)
+    guard let context = UIGraphicsGetCurrentContext() else {
+      return
+    }
+    
+    tempImageView.image?.draw(in: view.bounds)
+  
+    if let img = brush.cgImage{
+      
+      context.draw(img, in: CGRect(x: toPoint.x-brushWidth/2, y: toPoint.y - brushWidth/2, width: CGFloat( brushWidth), height: CGFloat (brushWidth)))
+    }
+    tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+    tempImageView.alpha = opacity
+    UIGraphicsEndImageContext()
+  }
+  
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else {
       return
     }
     swiped = true
     let currentPoint = touch.location(in: view)
-    drawLine(from: lastPoint, to: currentPoint)
+    if texture == nil {
+      drawLine(from: lastPoint, to: currentPoint)
+    }else{
+      drawTexture(from: lastPoint, to: currentPoint, brush: texture!)
+    }
+    
     
     lastPoint = currentPoint
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     if !swiped {
-      drawLine(from: lastPoint, to: lastPoint)
+      if texture == nil{
+        drawLine(from: lastPoint, to: lastPoint)
+      }else{
+        drawTexture(from: lastPoint, to: lastPoint, brush: texture!)
+      }
     }
     UIGraphicsBeginImageContext(mainImageView.frame.size)
     mainImageView.image?.draw(in: view.bounds, blendMode: .normal, alpha: 1.0)
@@ -119,9 +160,9 @@ class ViewController: UIViewController {
     color = pencil.color
     if pencil == .eraser {
       opacity = 1.0
+      texture = nil
     }
   }
-  
   
   @IBAction func save(_ sender: Any) {
     let image = mainImageView.image!
@@ -150,6 +191,14 @@ extension ViewController: ColorViewControllerDelegate {
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     self.dismiss(animated: true, completion: nil)
+    switch imagePickerAction {
+    case .texture:
+      openTexture(info: info)
+    case .open:
+      openImage(info: info)
+    }
+  }
+  func openImage(info:[UIImagePickerController.InfoKey: Any]) {
     UIGraphicsBeginImageContext(view.frame.size)
     guard let context = UIGraphicsGetCurrentContext() else {
       return
@@ -165,6 +214,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     }
   }
   
+  func openTexture(info:[UIImagePickerController.InfoKey: Any]) {
+    guard let image = info[.originalImage] as? UIImage else { return }
+    texture = image
+  }
 }
 
 

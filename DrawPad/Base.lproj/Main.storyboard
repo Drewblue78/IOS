@@ -20,9 +20,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-i0-hyu" userLabel="TempImageView">
-                                <rect key="frame" x="0.0" y="153" width="428" height="773"/>
-                            </imageView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Tqc-UA-DTi">
                                 <rect key="frame" x="30" y="36" width="51" height="31"/>
                                 <connections>
@@ -32,7 +29,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L06-IZ-4jf" userLabel="MainImageView">
                                 <rect key="frame" x="0.0" y="153" width="428" height="773"/>
                             </imageView>
-                            <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuW-Qb-y5J">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gn-i0-hyu" userLabel="TempImageView">
+                                <rect key="frame" x="0.0" y="153" width="428" height="773"/>
+                            </imageView>
+                            <button hidden="YES" opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuW-Qb-y5J">
                                 <rect key="frame" x="-1" y="775" width="40" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="4kw-Ep-0j3"/>
@@ -92,10 +92,17 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1UW-gD-7Sd">
-                                                <rect key="frame" x="166" y="0.0" width="41" height="30"/>
+                                                <rect key="frame" x="111.66666666666666" y="0.0" width="41" height="30"/>
                                                 <state key="normal" title="OPEN"/>
                                                 <connections>
                                                     <action selector="imageChoose:" destination="bnj-k7-SPu" eventType="touchUpInside" id="Mvx-zs-Rri"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUJ-ac-mgV">
+                                                <rect key="frame" x="207.33333333333334" y="0.0" width="67.000000000000028" height="30"/>
+                                                <state key="normal" title="TEXTURE"/>
+                                                <connections>
+                                                    <action selector="toggleTexture:" destination="bnj-k7-SPu" eventType="touchUpInside" id="vVH-Uz-6i4"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dsd-0O-uBZ">
@@ -132,6 +139,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="eraseButton" destination="TuW-Qb-y5J" id="qjg-Qe-ldQ"/>
                         <outlet property="mainImageView" destination="L06-IZ-4jf" id="2kF-W3-1Le"/>
                         <outlet property="menu" destination="but-et-cch" id="ZHk-Fz-1Qv"/>
                         <outlet property="show" destination="Tqc-UA-DTi" id="x31-rO-qXd"/>
