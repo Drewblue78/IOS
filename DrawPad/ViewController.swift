@@ -10,7 +10,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var tempImageView: UIImageView!
   @IBOutlet weak var show: UISwitch!
   
-  @IBOutlet weak var eraseButton: UIButton!
+  @IBOutlet weak var helper: UILabel!
   @IBOutlet weak var menu: UIStackView!
   
   var lastPoint = CGPoint.zero
@@ -21,6 +21,8 @@ class ViewController: UIViewController {
   
   var imagePickerAction = ImagePickerAction.open
   var texture: UIImage?
+  var travelDistance = CGFloat.zero
+  var brushSpacing = CGFloat(20)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -37,7 +39,7 @@ class ViewController: UIViewController {
   
   @IBAction func switchChanged(_ sender: UISwitch) {
     menu.isHidden = !show.isOn
-    eraseButton.isHidden = !show.isOn
+    helper.isHidden = !show.isOn
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -46,6 +48,7 @@ class ViewController: UIViewController {
     }
     swiped = false
     lastPoint = touch.location(in: view)
+    travelDistance = 0
   }
   var imagePicker = UIImagePickerController()
   @IBAction func imageChoose(_ sender: Any) {
@@ -77,13 +80,20 @@ class ViewController: UIViewController {
   }
   
   func drawTexture(from fromPoint: CGPoint, to toPoint: CGPoint, brush: UIImage) {
+    let dx = toPoint.x - fromPoint.x
+    let dy = toPoint.y - fromPoint.y
+    travelDistance += (dx*dx + dy*dy).squareRoot()
+    if travelDistance < brushSpacing{
+      return
+    }
+    travelDistance = CGFloat.zero
     UIGraphicsBeginImageContext(view.frame.size)
     guard let context = UIGraphicsGetCurrentContext() else {
       return
     }
     
     tempImageView.image?.draw(in: view.bounds)
-  
+    
     if let img = brush.cgImage{
       
       context.draw(img, in: CGRect(x: toPoint.x-brushWidth/2, y: toPoint.y - brushWidth/2, width: CGFloat( brushWidth), height: CGFloat (brushWidth)))
