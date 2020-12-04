@@ -1,30 +1,18 @@
-//
-//  ColorViewController.swift
-//  DrawPad
-//
-//  Created by Andrew Power on 2020-11-24.
-//  Copyright © 2020 Ray Wenderlich. All rights reserved.
-//
 
 import Foundation
-
 
 import UIKit
 
 protocol ColorViewControllerDelegate: class {
   func colorViewControllerFinished(_ colorViewController: ColorViewController)
-  }
-
+}
 
 class ColorViewController: UIViewController {
   
   @IBOutlet weak var previewImageView: UIImageView!
-  
-  
   @IBOutlet weak var sliderRed: UISlider!
   @IBOutlet weak var sliderGreen: UISlider!
   @IBOutlet weak var sliderBlue: UISlider!
-  
   @IBOutlet weak var labelRed: UILabel!
   @IBOutlet weak var labelGreen: UILabel!
   @IBOutlet weak var labelBlue: UILabel!
@@ -36,11 +24,9 @@ class ColorViewController: UIViewController {
   var red: CGFloat = 0.0
   var green: CGFloat = 0.0
   var blue: CGFloat = 0.0
-
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     
     sliderRed.value = Float(red * 255.0)
     labelRed.text = Int(sliderRed.value).description
@@ -50,9 +36,8 @@ class ColorViewController: UIViewController {
     labelBlue.text = Int(sliderBlue.value).description
     
     drawPreview()
-    
-    // Do any additional setup after loading the view.
   }
+  
   func drawPreview(){
     UIGraphicsBeginImageContext(previewImageView.frame.size)
     guard let context = UIGraphicsGetCurrentContext() else {
@@ -68,13 +53,12 @@ class ColorViewController: UIViewController {
     previewImageView.image = UIGraphicsGetImageFromCurrentImageContext()
     UIGraphicsEndImageContext()
   }
-  // MARK: - Actions
+  
+  // ACTIONS
   
   @IBAction func closePressed(_ sender: Any) {
     delegate?.colorViewControllerFinished(self)
-    
   }
-  
   
   @IBAction func colorChanged(_ sender: UISlider) {
     red = CGFloat(sliderRed.value / 255.0)

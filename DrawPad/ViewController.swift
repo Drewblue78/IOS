@@ -9,7 +9,6 @@ class ViewController: UIViewController {
   @IBOutlet weak var mainImageView: UIImageView!
   @IBOutlet weak var tempImageView: UIImageView!
   @IBOutlet weak var show: UISwitch!
-  
   @IBOutlet weak var helper: UILabel!
   @IBOutlet weak var menu: UIStackView!
   
@@ -18,7 +17,7 @@ class ViewController: UIViewController {
   var brushWidth: CGFloat = 10.0
   var opacity:CGFloat = 1.0
   var swiped = false
-  
+  var imagePicker = UIImagePickerController()
   var imagePickerAction = ImagePickerAction.open
   var texture: UIImage?
   var travelDistance = CGFloat.zero
@@ -28,19 +27,14 @@ class ViewController: UIViewController {
     super.viewDidLoad()
   }
   
-  @IBAction func toggleTexture(_ sender: Any) {
-    imagePickerAction = ImagePickerAction.texture
-    imagePicker.delegate = self
-    imagePicker.sourceType = .savedPhotosAlbum
-    imagePicker.allowsEditing = false
-    present(imagePicker, animated: true, completion: nil)
-    
-  }
+  //  HIDE/SHOW BUTTONS
   
   @IBAction func switchChanged(_ sender: UISwitch) {
     menu.isHidden = !show.isOn
     helper.isHidden = !show.isOn
   }
+  
+  //  DRAWING LINES
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
     guard let touch = touches.first else {
@@ -50,14 +44,7 @@ class ViewController: UIViewController {
     lastPoint = touch.location(in: view)
     travelDistance = 0
   }
-  var imagePicker = UIImagePickerController()
-  @IBAction func imageChoose(_ sender: Any) {
-    imagePickerAction = ImagePickerAction.open
-    imagePicker.delegate = self
-    imagePicker.sourceType = .savedPhotosAlbum
-    imagePicker.allowsEditing = false
-    present(imagePicker, animated: true, completion: nil)
-  }
+  
   func drawLine(from fromPoint: CGPoint, to toPoint: CGPoint) {
     UIGraphicsBeginImageContext(view.frame.size)
     guard let context = UIGraphicsGetCurrentContext() else {
@@ -67,37 +54,11 @@ class ViewController: UIViewController {
     
     context.move(to: fromPoint)
     context.addLine(to: toPoint)
-    
     context.setLineCap(.round)
     context.setBlendMode(.normal)
     context.setLineWidth(brushWidth)
     context.setStrokeColor(color.cgColor)
-    
     context.strokePath()
-    tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-    tempImageView.alpha = opacity
-    UIGraphicsEndImageContext()
-  }
-  
-  func drawTexture(from fromPoint: CGPoint, to toPoint: CGPoint, brush: UIImage) {
-    let dx = toPoint.x - fromPoint.x
-    let dy = toPoint.y - fromPoint.y
-    travelDistance += (dx*dx + dy*dy).squareRoot()
-    if travelDistance < brushSpacing{
-      return
-    }
-    travelDistance = CGFloat.zero
-    UIGraphicsBeginImageContext(view.frame.size)
-    guard let context = UIGraphicsGetCurrentContext() else {
-      return
-    }
-    
-    tempImageView.image?.draw(in: view.bounds)
-    
-    if let img = brush.cgImage{
-      
-      context.draw(img, in: CGRect(x: toPoint.x-brushWidth/2, y: toPoint.y - brushWidth/2, width: CGFloat( brushWidth), height: CGFloat (brushWidth)))
-    }
     tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
     tempImageView.alpha = opacity
     UIGraphicsEndImageContext()
@@ -114,8 +75,6 @@ class ViewController: UIViewController {
     }else{
       drawTexture(from: lastPoint, to: currentPoint, brush: texture!)
     }
-    
-    
     lastPoint = currentPoint
   }
   
@@ -136,6 +95,76 @@ class ViewController: UIViewController {
     tempImageView.image = nil
   }
   
+  @IBAction func resetPressed(_ sender: Any) {
+    mainImageView.image = nil
+  }
+  
+  // ERASER
+  
+  @IBAction func pencilPressed(_ sender: UIButton) {
+    guard let pencil = Pencil(tag: sender.tag) else {
+      return
+    }
+    color = pencil.color
+    if pencil == .eraser {
+      opacity = 1.0
+      texture = nil
+    }
+  }
+  
+  //  SHARING
+  @IBAction func sharePressed(_ sender: Any) {
+    guard let image = mainImageView.image else {
+      return
+    }
+    let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+    present(activity, animated: true)
+  }
+  
+  //  FIND IMAGES TO OPEN
+  
+  @IBAction func imageChoose(_ sender: Any) {
+    imagePickerAction = ImagePickerAction.open
+    imagePicker.delegate = self
+    imagePicker.sourceType = .savedPhotosAlbum
+    imagePicker.allowsEditing = false
+    present(imagePicker, animated: true, completion: nil)
+  }
+  
+  //  DRAW LINES WITH IMAGES
+  
+  @IBAction func toggleTexture(_ sender: Any) {
+    imagePickerAction = ImagePickerAction.texture
+    imagePicker.delegate = self
+    imagePicker.sourceType = .savedPhotosAlbum
+    imagePicker.allowsEditing = false
+    present(imagePicker, animated: true, completion: nil)
+  }
+  
+  func drawTexture(from fromPoint: CGPoint, to toPoint: CGPoint, brush: UIImage) {
+    let dx = toPoint.x - fromPoint.x
+    let dy = toPoint.y - fromPoint.y
+    travelDistance += (dx*dx + dy*dy).squareRoot()
+    if travelDistance < brushSpacing{
+      return
+    }
+    travelDistance = CGFloat.zero
+    UIGraphicsBeginImageContext(view.frame.size)
+    guard let context = UIGraphicsGetCurrentContext() else {
+      return
+    }
+    
+    tempImageView.image?.draw(in: view.bounds)
+    if let img = brush.cgImage{
+      context.draw(img, in: CGRect(x: toPoint.x-brushWidth/2, y: toPoint.y - brushWidth/2, width: CGFloat( brushWidth), height: CGFloat (brushWidth)))
+    }
+    tempImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+    tempImageView.alpha = opacity
+    UIGraphicsEndImageContext()
+  }
+  
+  // CONTROLS FOR COLOR AND BRUSH SIZE
+  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     guard let navController = segue.destination as? UINavigationController
     else {
@@ -151,36 +180,16 @@ class ViewController: UIViewController {
     }
   }
   
-  @IBAction func resetPressed(_ sender: Any) {
-    mainImageView.image = nil
-  }
-  
-  @IBAction func sharePressed(_ sender: Any) {
-    guard let image = mainImageView.image else {
-      return
-    }
-    let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-    present(activity, animated: true)
-  }
-  
-  @IBAction func pencilPressed(_ sender: UIButton) {
-    guard let pencil = Pencil(tag: sender.tag) else {
-      return
-    }
-    color = pencil.color
-    if pencil == .eraser {
-      opacity = 1.0
-      texture = nil
-    }
-  }
+  //  SAVING
   
   @IBAction func save(_ sender: Any) {
     let image = mainImageView.image!
     UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
-    
   }
 }
-//  - SettingsViewControllerDelegate
+
+//  SETTINGS AND COLOR VIEW CONTROLLER DELEGATE
+//  EXTENSIONS
 
 extension ViewController: SettingsViewControllerDelegate {
   func settingsViewControllerFinished(_ settingsViewController: SettingsViewController) {
@@ -195,9 +204,8 @@ extension ViewController: ColorViewControllerDelegate {
     color = UIColor(red: colorViewController.red, green: colorViewController.green, blue: colorViewController.blue, alpha: 1.0)
     dismiss(animated: true)
   }
-  
-  
 }
+
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     self.dismiss(animated: true, completion: nil)
@@ -214,7 +222,6 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
       return
     }
     guard let image = info[.originalImage] as? UIImage else { return }
-    //        mainImageView.image = image
     if let img = image.cgImage{
       tempImageView.image?.draw(in: view.bounds)
       context.draw(img, in: CGRect(x: 0, y: 0, width: img.width, height: img.height))
@@ -229,5 +236,6 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     texture = image
   }
 }
+
 
 
