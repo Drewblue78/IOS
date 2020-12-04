@@ -11,7 +11,6 @@
 		E1941C5720B53CB4004A2217 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C5620B53CB4004A2217 /* AppDelegate.swift */; };
 		E1941C5920B53CB4004A2217 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C5820B53CB4004A2217 /* ViewController.swift */; };
 		E1941C5C20B53CB4004A2217 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1941C5A20B53CB4004A2217 /* Main.storyboard */; };
-		E1941C5E20B53CB5004A2217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1941C5D20B53CB5004A2217 /* Assets.xcassets */; };
 		E1941C6120B53CB5004A2217 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1941C5F20B53CB5004A2217 /* LaunchScreen.storyboard */; };
 		E1941C6920B544E8004A2217 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C6820B544E8004A2217 /* SettingsViewController.swift */; };
 		E1941C6B20B54914004A2217 /* Pencil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1941C6A20B54914004A2217 /* Pencil.swift */; };
@@ -19,11 +18,10 @@
 
 /* Begin PBXFileReference section */
 		80214C49256D4FCA005067BC /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
-		E1941C5320B53CB4004A2217 /* DrawPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1941C5320B53CB4004A2217 /* DrawPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = DrawPad.app; path = "/Users/macky/Desktop/FingerPaint/build/Debug-iphoneos/DrawPad.app"; sourceTree = "<absolute>"; };
 		E1941C5620B53CB4004A2217 /* AppDelegate.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1941C5820B53CB4004A2217 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1941C5B20B53CB4004A2217 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E1941C5D20B53CB5004A2217 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1941C6020B53CB5004A2217 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1941C6220B53CB5004A2217 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1941C6820B544E8004A2217 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -45,19 +43,10 @@
 			isa = PBXGroup;
 			children = (
 				E1941C5520B53CB4004A2217 /* DrawPad */,
-				E1941C5420B53CB4004A2217 /* Products */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
 			tabWidth = 2;
-		};
-		E1941C5420B53CB4004A2217 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E1941C5320B53CB4004A2217 /* DrawPad.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
 		};
 		E1941C5520B53CB4004A2217 /* DrawPad */ = {
 			isa = PBXGroup;
@@ -68,7 +57,6 @@
 				80214C49256D4FCA005067BC /* ColorViewController.swift */,
 				E1941C6A20B54914004A2217 /* Pencil.swift */,
 				E1941C5A20B53CB4004A2217 /* Main.storyboard */,
-				E1941C5D20B53CB5004A2217 /* Assets.xcassets */,
 				E1941C5F20B53CB5004A2217 /* LaunchScreen.storyboard */,
 				E1941C6220B53CB5004A2217 /* Info.plist */,
 			);
@@ -120,7 +108,7 @@
 				Base,
 			);
 			mainGroup = E1941C4A20B53CB4004A2217;
-			productRefGroup = E1941C5420B53CB4004A2217 /* Products */;
+			productRefGroup = E1941C4A20B53CB4004A2217;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -135,7 +123,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1941C6120B53CB5004A2217 /* LaunchScreen.storyboard in Resources */,
-				E1941C5E20B53CB5004A2217 /* Assets.xcassets in Resources */,
 				E1941C5C20B53CB4004A2217 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
